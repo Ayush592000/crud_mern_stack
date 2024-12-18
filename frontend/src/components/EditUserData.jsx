@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NavBar from './NavBar'
 import { useNavigate } from 'react-router-dom'
 
-const Create = () => {
+const EditUserData = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -62,4 +62,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default EditUserData
