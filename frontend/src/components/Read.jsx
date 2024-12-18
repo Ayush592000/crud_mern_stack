@@ -45,7 +45,7 @@ const Read = () => {
                   <td>{item.email}</td>
                   <td>{item.age}</td>
                   <td>
-                    <Link to={`/edit/${item.id}`} className="text-primary text-decoration-none">
+                    <Link to={`/edit/${item._id}`} className="text-primary text-decoration-none">
                       📝
                     </Link>
                   </td>

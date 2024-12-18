@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const EditUserData = () => {
   const [userData, setUserData] = useState({
@@ -8,10 +8,26 @@ const EditUserData = () => {
     email: '',
     age: ''
   })
+  const { id } = useParams();
+  console.log(id)
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
     console.log(userData)
   }
+  useEffect(() => {
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/user/singleUser/${id}`);
+        const result = await response.json();
+        console.log(result);
+        setUserData(result.data);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchDataFromAPI();
+  }, []);
   const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +36,9 @@ const EditUserData = () => {
       return alert("name,email and password are required")
     }
     try {
-      const url = "http://localhost:4000/user/signin";
+      const url = `http://localhost:4000/user/edit/${id}`;
       const response = await fetch(url, {
-        "method": "POST",
+        "method": "PUT",
         headers: {
           'Content-Type': 'application/json',
         },
