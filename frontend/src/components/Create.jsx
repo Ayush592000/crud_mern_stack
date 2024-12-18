@@ -10,7 +10,7 @@ const Create = () => {
   })
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
-    console.log(userData)
+    // console.log(userData)
   }
   const navigate = useNavigate()
   const handleSubmit = async (e) => {

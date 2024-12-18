@@ -57,6 +57,7 @@ const singleUser = async (req, res) => {
   }
 }
 
+
 const updatedUser = async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
@@ -79,9 +80,28 @@ const updatedUser = async (req, res) => {
 };
 
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    console.log(id)
+    const deletedData = await UserModel.deleteOne({ _id: id });
+    res.status(201).json({
+      message: 'sucessfully deleted data',
+      success: true,
+      data: deletedData
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: 'Internal Server Error did not find data',
+      success: false,
+    });
+  }
+}
+
 module.exports = {
   storeUserData,
   fetchData,
   singleUser,
-  updatedUser
+  updatedUser,
+  deleteUser
 };

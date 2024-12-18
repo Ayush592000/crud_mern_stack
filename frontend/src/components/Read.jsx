@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 
 const Read = () => {
   const [fetchData, setFetchData] = useState([]); // Initialize with an empty array
-
+  const [userId, setUserID] = useState()
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
         const response = await fetch("http://localhost:4000/user/read");
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         setFetchData(result.data);
       } catch (error) {
         console.log("Error fetching data:", error);
@@ -19,6 +19,18 @@ const Read = () => {
 
     fetchDataFromAPI();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:4000/user/deleteUser/${id}`, {
+        method: 'DELETE'
+      })
+      const result = await response.json()
+      setFetchData(fetchData.filter((user) => user._id !== id))
+    } catch (error) {
+      alert('Failed to delete user', error);
+    }
+  }
 
   return (
     <div>
@@ -45,12 +57,16 @@ const Read = () => {
                   <td>{item.email}</td>
                   <td>{item.age}</td>
                   <td>
-                    <Link to={`/edit/${item._id}`} className="text-primary text-decoration-none">
+                    <Link
+                      to={`/edit/${item._id}`}
+                      className="text-primary text-decoration-none">
                       📝
                     </Link>
                   </td>
                   <td>
-                    <Link to={`/delete/${item.id}`} className="text-danger text-decoration-none">
+                    <Link
+                      className="text-danger text-decoration-none"
+                      onClick={() => handleDelete(item._id)}>
                       ❎
                     </Link>
                   </td>

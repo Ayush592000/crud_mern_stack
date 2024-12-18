@@ -9,17 +9,17 @@ const EditUserData = () => {
     age: ''
   })
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
-    console.log(userData)
+    // console.log(userData)
   }
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
         const response = await fetch(`http://localhost:4000/user/singleUser/${id}`);
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         setUserData(result.data);
       } catch (error) {
         console.log("Error fetching data:", error);
